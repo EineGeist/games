@@ -9,6 +9,7 @@ export interface GameData {
   url: string;
   merchantId: string;
   categoryId: string[];
+  favorite: boolean;
 }
 
 export interface CategoryData {
@@ -58,5 +59,3 @@ export type AllFetchActions =
 export type FetchDataThunk = ActionCreator<
   ThunkAction<void, AppState, void, AllFetchActions>
 >;
-
-export type FetchActions = keyof typeof FETCH_TYPES;

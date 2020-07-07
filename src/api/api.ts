@@ -39,6 +39,7 @@ export default new (class {
         url: game.Url,
         merchantId: game.MerchantID,
         categoryId: game.CategoryID,
+        favorite: false,
       })
     );
 
