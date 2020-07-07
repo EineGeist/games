@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import './App.scss';
 import Header from './Header/Header';
 
 const App: FC = () => {
