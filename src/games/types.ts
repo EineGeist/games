@@ -12,7 +12,7 @@ export type GamesArray = GameData[];
 export type ChunkedGamesArray = GamesArray[];
 
 export interface GamesState {
-  games: GamesArray;
+  allGames: GamesArray;
   gamesToDisplay: ChunkedGamesArray | null;
   maxItems: number;
   sort: SortOptions;
