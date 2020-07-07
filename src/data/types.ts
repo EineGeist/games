@@ -1,5 +1,6 @@
 import { ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { AppState } from 'store/types';
 
 export interface GameData {
   id: string;
@@ -55,7 +56,7 @@ export type AllFetchActions =
   | FetchErrorAction;
 
 export type FetchDataThunk = ActionCreator<
-  ThunkAction<void, {}, void, AllFetchActions>
+  ThunkAction<void, AppState, void, AllFetchActions>
 >;
 
 export type FetchActions = keyof typeof FETCH_TYPES;
