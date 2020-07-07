@@ -1,28 +1,11 @@
 import { ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { AppState } from 'store/types';
+import { GameData } from 'games/types';
+import { CategoryData } from 'categories/types';
+import { MerchantData } from 'merchants/types';
 
-export interface GameData {
-  id: string;
-  name: string;
-  imageFullPath: string;
-  url: string;
-  merchantId: string;
-  categoryId: string[];
-  favorite: boolean;
-}
-
-export interface CategoryData {
-  id: string;
-  name: string;
-}
-
-export interface MerchantData {
-  id: string;
-  name: string;
-}
-
-export interface Data {
+export interface FetchedData {
   games: GameData[];
   categories: CategoryData[];
   merchants: {
@@ -44,7 +27,7 @@ interface FetchAction<S extends string> {
 export interface FetchPendingAction extends FetchAction<'pending'> {}
 
 export interface FetchSuccessAction extends FetchAction<'success'> {
-  payload: Data;
+  payload: FetchedData;
 }
 
 export interface FetchErrorAction extends FetchAction<'error'> {

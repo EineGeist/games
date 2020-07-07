@@ -1,5 +1,5 @@
 import { chunk } from 'lodash';
-import { GameData } from 'api/types';
+import { GameData } from './types';
 import {
   GamesState,
   GamesArray,

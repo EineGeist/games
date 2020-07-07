@@ -1,4 +1,6 @@
-import { Data, GameData, CategoryData } from './types';
+import { FetchedData } from './types';
+import { GameData } from 'games/types';
+import { CategoryData } from 'categories/types';
 
 export default new (class {
   private readonly instance: this | null = null;
@@ -30,27 +32,25 @@ export default new (class {
     }
   }
 
-  processData({ games, categories, merchants }: any): Data {
-    const processedGames = games.map(
-      (game: any): GameData => ({
-        id: game.ID,
-        name: game.Name.en,
-        imageFullPath: game.ImageFullPath,
-        url: game.Url,
-        merchantId: game.MerchantID,
-        categoryId: game.CategoryID,
-        favorite: false,
-      })
-    );
+  processData({ games, categories, merchants }: any): FetchedData {
+    const processedGames: FetchedData['games'] = games.map((game: any) => ({
+      id: game.ID,
+      name: game.Name.en,
+      imageFullPath: game.ImageFullPath,
+      url: game.Url,
+      merchantId: game.MerchantID,
+      categoryId: game.CategoryID,
+      favorite: false,
+    }));
 
-    const processedCategories = categories.map(
-      (category: any): CategoryData => ({
+    const processedCategories: FetchedData['categories'] = categories.map(
+      (category: any) => ({
         id: category.ID,
         name: category.Name.en,
       })
     );
 
-    const processedMerchants: Data['merchants'] = {};
+    const processedMerchants: FetchedData['merchants'] = {};
 
     for (const { ID: id, Name: name } of Object.values(merchants) as any) {
       processedMerchants[id] = { id, name };

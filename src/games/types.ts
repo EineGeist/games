@@ -1,4 +1,12 @@
-import { GameData } from 'api/types';
+export interface GameData {
+  id: string;
+  name: string;
+  imageFullPath: string;
+  url: string;
+  merchantId: string;
+  categoryId: string[];
+  favorite: boolean;
+}
 
 export type SortOptions = 'name' | 'name-reverse';
 
