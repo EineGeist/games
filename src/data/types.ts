@@ -37,8 +37,6 @@ interface FetchAction<S extends string> {
   meta: {
     status: S;
   };
-  payload?: Data;
-  error?: string;
 }
 
 export interface FetchPendingAction extends FetchAction<'pending'> {}
