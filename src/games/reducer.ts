@@ -8,7 +8,7 @@ import {
   GamesSetSortAction,
   GamesSetFiltersAction,
 } from './types';
-import processForDisplays from './processForDisplays';
+import processForDisplays from './processForDisplay/process';
 
 const initialState: GamesState = {
   allGames: [],
