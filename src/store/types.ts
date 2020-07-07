@@ -1,5 +1,5 @@
 import { AllFetchActions } from 'api/types';
-import { GamesState } from 'games/types';
+import { GamesState, AllGamesActions } from 'games/types';
 import { CategoriesState } from 'categories/types';
 import { MerchantsState } from 'merchants/types';
 
@@ -9,4 +9,4 @@ export interface AppState {
   merchants: MerchantsState;
 }
 
-export type AllActions = AllFetchActions;
+export type AllActions = AllFetchActions | AllGamesActions;
