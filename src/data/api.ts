@@ -1,4 +1,4 @@
-import { Data, GameData, CategoryData, MerchantData } from './types';
+import { Data, GameData, CategoryData } from './types';
 
 export default new (class {
   private readonly instance: this | null = null;
@@ -52,10 +52,7 @@ export default new (class {
     const processedMerchants: Data['merchants'] = {};
 
     for (const { ID: id, Name: name } of Object.values(merchants) as any) {
-      processedMerchants[id] = {
-        id,
-        name,
-      };
+      processedMerchants[id] = { id, name };
     }
 
     return {
