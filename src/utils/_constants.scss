@@ -1,0 +1,11 @@
+$colors: (
+  primary: crimson,
+  light: whitesmoke,
+  dark: #333333,
+);
+
+@function get-color($key) {
+  $color: map-get($colors, $key);
+
+  @return $color;
+}
