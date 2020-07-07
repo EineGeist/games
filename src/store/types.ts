@@ -1,4 +1,4 @@
-import { AllFetchActions } from 'data/types';
+import { AllFetchActions } from 'api/types';
 import { GamesState } from 'games/types';
 import { CategoriesState } from 'categories/types';
 import { MerchantsState } from 'merchants/types';

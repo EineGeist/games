@@ -1,3 +1,3 @@
-import { CategoryData } from 'data/types';
+import { CategoryData } from 'api/types';
 
 export type CategoriesState = CategoryData[];

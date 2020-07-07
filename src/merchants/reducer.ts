@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { FETCH_TYPES, AllFetchActions, FetchSuccessAction } from 'data/types';
+import { FETCH_TYPES, AllFetchActions, FetchSuccessAction } from 'api/types';
 import { MerchantsState } from './types';
 
 const initialState: MerchantsState = {};

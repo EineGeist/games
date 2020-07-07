@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import './App.scss';
 import Header from './Header/Header';
-import { fetchData } from 'data/actions';
+import { fetchData } from 'api/actions';
 import { useDispatch } from 'react-redux';
 
 const App: FC = () => {
