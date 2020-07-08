@@ -4,3 +4,12 @@ html {
   font: 125% 'Roboto', sans-serif;
   color: get-color(dark);
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: get-color(primary);
+  }
+}
