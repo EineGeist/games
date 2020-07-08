@@ -6,6 +6,7 @@ import { AppState } from 'store/types';
 import { GamesState } from 'games/types';
 import './GamesPage.scss';
 import GamesHeader from './GamesHeader';
+import GamesFooter from './GamesFooter';
 
 const GamesPage: FC = () => {
   const params = useParams<{ page: string }>();
@@ -26,6 +27,7 @@ const GamesPage: FC = () => {
   return pageIsValid() ? (
     <div className="games-page">
       <GamesHeader page={page!} numberOfPages={gamesToDisplay.length} />
+      <GamesFooter page={page!} numberOfPages={gamesToDisplay.length} />
     </div>
   ) : (
     <h2>{ELLIPSIS_CHAR}oops</h2>
