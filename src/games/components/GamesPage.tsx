@@ -5,6 +5,7 @@ import { ELLIPSIS_CHAR } from 'utils';
 import { AppState } from 'store/types';
 import { GamesState } from 'games/types';
 import './GamesPage.scss';
+import GamesHeader from './GamesHeader';
 
 const GamesPage: FC = () => {
   const params = useParams<{ page: string }>();
@@ -23,7 +24,9 @@ const GamesPage: FC = () => {
   };
 
   return pageIsValid() ? (
-    <div className="games-page"></div>
+    <div className="games-page">
+      <GamesHeader page={page!} numberOfPages={gamesToDisplay.length} />
+    </div>
   ) : (
     <h2>{ELLIPSIS_CHAR}oops</h2>
   );
