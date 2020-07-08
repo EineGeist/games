@@ -3,6 +3,8 @@ export interface MerchantData {
   name: string;
 }
 
+export type MerchantsArray = MerchantData[];
+
 export interface MerchantsState {
   [prop: string]: MerchantData;
 }

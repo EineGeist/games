@@ -3,4 +3,5 @@ export interface CategoryData {
   name: string;
 }
 
-export type CategoriesState = CategoryData[];
+export type CategoriesArray = CategoryData[];
+export type CategoriesState = CategoriesArray;
