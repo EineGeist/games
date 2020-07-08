@@ -7,9 +7,7 @@ import {
   Filters,
 } from './types';
 
-export const gamesSetGamesMaxItems = (
-  maxItems: number
-): GamesSetMaxItemsAction => ({
+export const gamesSetMaxItems = (maxItems: number): GamesSetMaxItemsAction => ({
   type: GAMES_TYPES.GAMES_SET_MAX_ITEMS,
   payload: maxItems,
 });
