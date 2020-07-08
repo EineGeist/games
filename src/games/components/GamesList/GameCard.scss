@@ -1,0 +1,85 @@
+@import 'utils';
+
+$card-border-color: get-color(grey);
+$favorite-button-size: 1.5em;
+$figure-caption-padding: 1rem;
+
+.game-card {
+  box-sizing: border-box;
+  border: 2px solid $card-border-color;
+}
+
+.game-card__figure {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.game-card__image {
+  box-sizing: border-box;
+  width: 50%;
+  border-right: 2px solid $card-border-color;
+}
+
+.game-card__figure-caption {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  padding: $figure-caption-padding;
+}
+
+.game-card__name {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 $favorite-button-size;
+  width: 100%;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.game-card__link {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  background-color: transparent;
+  border: 1px solid get-color(dark);
+
+  &:focus,
+  &:hover {
+    border-color: get-color(primary);
+    background-color: get-color(primary);
+    color: get-color(light);
+  }
+}
+
+.game-card__make-favorite {
+  box-sizing: border-box;
+  position: absolute;
+  top: $figure-caption-padding;
+  right: $figure-caption-padding;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: $favorite-button-size;
+  height: $favorite-button-size;
+  margin: 0;
+
+  border: 1px solid get-color(grey);
+  border-radius: 0;
+  outline: none;
+  background-color: transparent;
+
+  line-height: 1;
+  cursor: pointer;
+
+  &:focus,
+  &:hover {
+    border-color: get-color(primary);
+    color: get-color(primary);
+  }
+}

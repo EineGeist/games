@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS_CHAR } from 'utils';
 import { AppState } from 'store/types';
 import { GamesState } from 'games/types';
+import { toggleFavorite } from 'games/actions';
 import './GamesPage.scss';
 import GamesHeader from './GamesHeader';
+import GamesList from './GamesList/GamesList';
 import GamesFooter from './GamesFooter';
 
 const GamesPage: FC = () => {
@@ -27,6 +29,7 @@ const GamesPage: FC = () => {
   return pageIsValid() ? (
     <div className="games-page">
       <GamesHeader page={page!} numberOfPages={gamesToDisplay.length} />
+      <GamesList games={gamesToDisplay[page! - 1]} />
       <GamesFooter page={page!} numberOfPages={gamesToDisplay.length} />
     </div>
   ) : (
