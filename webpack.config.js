@@ -33,6 +33,7 @@ module.exports = {
   output: {
     filename: fileName + '.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
 
   optimization: optimization(),
@@ -42,6 +43,7 @@ module.exports = {
     inline: true,
     port: 3000,
     hot: isDev,
+    historyApiFallback: true,
   },
 
   resolve: {
