@@ -1,8 +1,10 @@
 import React, { FC, useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchData } from 'api/actions';
 import './App.scss';
 import Header from './Header/Header';
-import { fetchData } from 'api/actions';
-import { useDispatch } from 'react-redux';
+import GamesPage from 'games/components/GamesPage';
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -14,7 +16,9 @@ const App: FC = () => {
   return (
     <>
       <Header />
-      <main className="app-main"></main>
+      <main className="app-main">
+        <Route path="/:page" component={GamesPage} />
+      </main>
     </>
   );
 };
