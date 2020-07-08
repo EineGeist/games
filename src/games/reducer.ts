@@ -1,76 +1,109 @@
 import { Reducer } from 'redux';
 import { FETCH_TYPES, AllFetchActions, FetchSuccessAction } from 'api/types';
-import {
-  GamesState,
-  GAMES_TYPES,
-  AllGamesActions,
-  GamesSetMaxItemsAction,
-  GamesSetSortAction,
-  GamesSetFiltersAction,
-} from './types';
-import processForDisplays from './processForDisplay/process';
+import { GamesState, GAMES_TYPES, AllGamesActions } from './types';
+import ProcessForDisplays from './processForDisplay';
 
 const initialState: GamesState = {
   allGames: [],
   gamesToDisplay: null,
-  maxItems: 20,
+  itemsPerPage: 20,
   sort: 'name',
   filters: {
     byFavorite: false,
-    byCategories: 'all',
-    byMerchants: 'all',
+    byCategories: [],
+    byMerchants: [],
   },
   priority: [],
 };
+
+let processGamesToDisplay: ProcessForDisplays;
 
 const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
   state = initialState,
   action
 ) => {
   switch (action.type) {
-    case FETCH_TYPES.FETCH_DATA: {
-      const { meta, payload } = action as FetchSuccessAction;
+    case FETCH_TYPES['FETCH_DATA']: {
+      if (action.meta.status !== 'success') return state;
+      const { payload } = action as FetchSuccessAction;
 
-      if (meta.status !== 'success') return state;
+      const newState: GamesState = {
+        ...state,
+        allGames: payload.games,
+      };
 
-      const allGames = payload.games;
-      const gamesToDisplay = processForDisplays(state, allGames);
+      processGamesToDisplay = new ProcessForDisplays(
+        payload.categories,
+        Object.values(payload.merchants),
+        newState
+      );
 
-      return {
+      return processGamesToDisplay.update(newState);
+    }
+
+    case GAMES_TYPES['TOGGLE_FAVORITE']: {
+      const allGames = [...state.allGames];
+      const gameIndex = allGames.findIndex(game => game.id === action.payload);
+      const game = { ...allGames[gameIndex] };
+
+      game.favorite = !game.favorite;
+      allGames[gameIndex] = game;
+
+      return processGamesToDisplay.update({
         ...state,
         allGames,
-        gamesToDisplay,
-      };
+      });
     }
 
-    case GAMES_TYPES.GAMES_SET_MAX_ITEMS: {
-      return {
+    case GAMES_TYPES['SET_ITEMS_PER_PAGE']: {
+      return processGamesToDisplay.update({
         ...state,
-        maxItems: (action as GamesSetMaxItemsAction).payload,
-      };
+        itemsPerPage: action.payload,
+      });
     }
 
-    case GAMES_TYPES.GAMES_SET_SORT: {
-      return {
+    case GAMES_TYPES['SET_SORT']: {
+      return processGamesToDisplay.update({
         ...state,
-        sort: (action as GamesSetSortAction).payload,
-      };
+        sort: action.payload,
+      });
     }
 
-    case GAMES_TYPES.GAMES_SET_FILTERS: {
-      const { byFavorite, byCategories, byMerchants } = state.filters;
-      const { payload } = action as GamesSetFiltersAction;
-
-      const filters = {
-        byFavorite: payload.byFavorite ?? byFavorite,
-        byCategories: payload.byCategories ?? byCategories,
-        byMerchants: payload.byMerchants ?? byMerchants,
-      };
-
-      return {
+    case GAMES_TYPES['TOGGLE_FAVORITE_FILTER']: {
+      return processGamesToDisplay.update({
         ...state,
-        filters,
-      };
+        filters: {
+          ...state.filters,
+          byFavorite: !state.filters.byFavorite,
+        },
+      });
+    }
+
+    case GAMES_TYPES['SET_CATEGORY_FILTER']: {
+      return processGamesToDisplay.update({
+        ...state,
+        filters: {
+          ...state.filters,
+          byCategories: action.payload,
+        },
+      });
+    }
+
+    case GAMES_TYPES['SET_MERCHANT_FILTER']: {
+      return processGamesToDisplay.update({
+        ...state,
+        filters: {
+          ...state.filters,
+          byMerchants: action.payload,
+        },
+      });
+    }
+
+    case GAMES_TYPES['SET_PRIORITY']: {
+      return processGamesToDisplay.update({
+        ...state,
+        priority: action.payload,
+      });
     }
 
     default: {

@@ -12,8 +12,8 @@ export type SortOptions = 'name' | 'name-reverse';
 
 export interface Filters {
   byFavorite: boolean;
-  byCategories: string[] | 'all';
-  byMerchants: string[] | 'all';
+  byCategories: string[];
+  byMerchants: string[];
 }
 
 export type GamesArray = GameData[];
@@ -22,35 +22,61 @@ export type ChunkedGamesArray = GamesArray[];
 export interface GamesState {
   allGames: GamesArray;
   gamesToDisplay: ChunkedGamesArray | null;
-  maxItems: number;
+  itemsPerPage: number;
   sort: SortOptions;
   filters: Filters;
   priority: string[];
 }
 
 export enum GAMES_TYPES {
-  GAMES_SET_MAX_ITEMS = 'GAMES_SET_MAX_ITEMS',
-  GAMES_SET_SORT = 'GAMES_SET_SORT',
-  GAMES_SET_FILTERS = 'GAMES_SET_FILTERS',
+  TOGGLE_FAVORITE = 'GAMES/TOGGLE_FAVORITE',
+  SET_ITEMS_PER_PAGE = 'GAMES/SET_ITEMS_PER_PAGE',
+  SET_SORT = 'GAMES/SET_SORT',
+  TOGGLE_FAVORITE_FILTER = 'GAMES/TOGGLE_FAVORITE_FILTER',
+  SET_CATEGORY_FILTER = 'GAMES/SET_CATEGORY_FILTER',
+  SET_MERCHANT_FILTER = 'GAMES/SET_MERCHANT_FILTER',
+  SET_PRIORITY = 'GAMES/SET_PRIORITY',
 }
-const { GAMES_SET_MAX_ITEMS, GAMES_SET_SORT, GAMES_SET_FILTERS } = GAMES_TYPES;
 
-export interface GamesSetMaxItemsAction {
-  type: typeof GAMES_SET_MAX_ITEMS;
+export interface ToggleFavoriteAction {
+  type: typeof GAMES_TYPES['TOGGLE_FAVORITE'];
+  payload: string;
+}
+
+export interface SetItemsPerPageAction {
+  type: typeof GAMES_TYPES['SET_ITEMS_PER_PAGE'];
   payload: number;
 }
 
-export interface GamesSetSortAction {
-  type: typeof GAMES_SET_SORT;
+export interface SetSortAction {
+  type: typeof GAMES_TYPES['SET_SORT'];
   payload: SortOptions;
 }
 
-export interface GamesSetFiltersAction {
-  type: typeof GAMES_SET_FILTERS;
-  payload: Partial<Filters>;
+export interface ToggleFavoriteFilter {
+  type: typeof GAMES_TYPES['TOGGLE_FAVORITE_FILTER'];
+}
+
+export interface SetCategoryFilterAction {
+  type: typeof GAMES_TYPES['SET_CATEGORY_FILTER'];
+  payload: string[];
+}
+
+export interface SetMerchantFilterAction {
+  type: typeof GAMES_TYPES['SET_MERCHANT_FILTER'];
+  payload: string[];
+}
+
+export interface SetPriorityAction {
+  type: typeof GAMES_TYPES['SET_PRIORITY'];
+  payload: string[];
 }
 
 export type AllGamesActions =
-  | GamesSetMaxItemsAction
-  | GamesSetSortAction
-  | GamesSetFiltersAction;
+  | ToggleFavoriteAction
+  | SetItemsPerPageAction
+  | SetSortAction
+  | ToggleFavoriteFilter
+  | SetCategoryFilterAction
+  | SetMerchantFilterAction
+  | SetPriorityAction;

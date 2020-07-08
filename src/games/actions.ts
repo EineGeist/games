@@ -1,25 +1,49 @@
 import {
   GAMES_TYPES,
-  GamesSetMaxItemsAction,
-  GamesSetSortAction,
-  GamesSetFiltersAction,
   SortOptions,
-  Filters,
+  ToggleFavoriteAction,
+  SetItemsPerPageAction,
+  SetSortAction,
+  ToggleFavoriteFilter,
+  SetCategoryFilterAction,
+  SetMerchantFilterAction,
+  SetPriorityAction,
 } from './types';
 
-export const gamesSetMaxItems = (maxItems: number): GamesSetMaxItemsAction => ({
-  type: GAMES_TYPES.GAMES_SET_MAX_ITEMS,
+export const toggleFavorite = (gameId: string): ToggleFavoriteAction => ({
+  type: GAMES_TYPES['TOGGLE_FAVORITE'],
+  payload: gameId,
+});
+
+export const setItemsPerPage = (maxItems: number): SetItemsPerPageAction => ({
+  type: GAMES_TYPES['SET_ITEMS_PER_PAGE'],
   payload: maxItems,
 });
 
-export const gamesSetSort = (sortBy: SortOptions): GamesSetSortAction => ({
-  type: GAMES_TYPES.GAMES_SET_SORT,
+export const setSort = (sortBy: SortOptions): SetSortAction => ({
+  type: GAMES_TYPES['SET_SORT'],
   payload: sortBy,
 });
 
-export const gamesSetFilter = (
-  filters: Partial<Filters>
-): GamesSetFiltersAction => ({
-  type: GAMES_TYPES.GAMES_SET_FILTERS,
-  payload: filters,
+export const toggleFavoriteFilter = (): ToggleFavoriteFilter => ({
+  type: GAMES_TYPES['TOGGLE_FAVORITE_FILTER'],
+});
+
+export const setCategoryFilter = (
+  categoriesIds: string[]
+): SetCategoryFilterAction => ({
+  type: GAMES_TYPES['SET_CATEGORY_FILTER'],
+  payload: categoriesIds,
+});
+
+export const setMerchantFilter = (
+  merchantsIds: string[]
+): SetMerchantFilterAction => ({
+  type: GAMES_TYPES['SET_MERCHANT_FILTER'],
+  payload: merchantsIds,
+});
+
+export const setPriority = (gameIds: string[]): SetPriorityAction => ({
+  type: GAMES_TYPES['SET_PRIORITY'],
+  payload: gameIds,
 });

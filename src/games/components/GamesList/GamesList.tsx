@@ -5,9 +5,10 @@ import GameCard from './GameCard';
 
 export interface GamesListProps {
   games: GamesArray;
+  onToggleFavorite: (id: string) => void;
 }
 
-const GamesList: FC<GamesListProps> = ({ games }) => {
+const GamesList: FC<GamesListProps> = ({ games, onToggleFavorite }) => {
   return (
     <ul className="games-list">
       {games.map(game => (
@@ -16,6 +17,8 @@ const GamesList: FC<GamesListProps> = ({ games }) => {
             name={game.name}
             imageUrl={game.imageFullPath}
             gameUrl={game.url}
+            isFavorite={game.favorite}
+            onFavoriteClick={() => onToggleFavorite(game.id)}
           />
         </li>
       ))}
