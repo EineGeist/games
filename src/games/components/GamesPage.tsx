@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { FC, useEffect } from 'react';
+import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ELLIPSIS_CHAR } from 'utils';
 import { AppState } from 'store/types';
@@ -14,31 +14,40 @@ import { toggleFavorite } from 'games/actions';
 const GamesPage: FC = () => {
   const dispatch = useDispatch();
   const params = useParams<{ page: string }>();
-  const page = parseInt(params.page, 10) || null;
+  const page = parseInt(params.page, 10);
 
   const gamesToDisplay = useSelector<AppState, GamesState['gamesToDisplay']>(
     ({ games }) => games.gamesToDisplay
   );
 
-  if (gamesToDisplay === null) return null;
+  let gamesToDisplayChanged = false;
 
-  const pageIsValid = (): boolean => {
-    if (!page || page < 1 || (gamesToDisplay && page > gamesToDisplay.length))
-      return false;
-    return true;
-  };
+  useEffect(() => {
+    gamesToDisplayChanged = true;
+  }, [gamesToDisplay]);
 
-  return pageIsValid() ? (
+  if (
+    gamesToDisplayChanged ||
+    !page ||
+    page < 1 ||
+    !gamesToDisplay ||
+    page > Math.max(gamesToDisplay.length, 1)
+  )
+    return <Redirect to="/games/1" />;
+
+  const shouldRenderGamesList = gamesToDisplay.length;
+
+  return (
     <div className="games-page">
-      <GamesHeader page={page!} numberOfPages={gamesToDisplay.length} />
-      <GamesList
-        games={gamesToDisplay[page! - 1]}
-        onToggleFavorite={gameId => dispatch(toggleFavorite(gameId))}
-      />
-      <GamesFooter page={page!} numberOfPages={gamesToDisplay.length} />
+      <GamesHeader page={page} numberOfPages={gamesToDisplay?.length || 0} />
+      {shouldRenderGamesList ? (
+        <GamesList
+          games={gamesToDisplay[page - 1]}
+          onToggleFavorite={gameId => dispatch(toggleFavorite(gameId))}
+        />
+      ) : null}
+      <GamesFooter page={page!} numberOfPages={gamesToDisplay?.length || 0} />
     </div>
-  ) : (
-    <h2>{ELLIPSIS_CHAR}oops</h2>
   );
 };
 
