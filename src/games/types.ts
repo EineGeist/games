@@ -1,3 +1,7 @@
+import { ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { AppState } from 'store/types';
+
 export interface GameData {
   id: string;
   name: string;
@@ -97,3 +101,7 @@ export type AllGamesActions =
   | SetMerchantFilterAction
   | SetPriorityAction
   | SetSearchQuery;
+
+export type TogglePriorityThunk = ActionCreator<
+  ThunkAction<void, AppState, void, SetPriorityAction>
+>;

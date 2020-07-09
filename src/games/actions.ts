@@ -9,6 +9,7 @@ import {
   SetMerchantFilterAction,
   SetPriorityAction,
   SetSearchQuery,
+  TogglePriorityThunk,
 } from './types';
 
 export const toggleFavorite = (gameId: string): ToggleFavoriteAction => ({
@@ -53,3 +54,15 @@ export const setSearchQuery = (subString: string): SetSearchQuery => ({
   type: GAMES_TYPES['SET_SEARCH_QUERY'],
   payload: subString,
 });
+
+export const togglePriority: TogglePriorityThunk = (gameId: string) => (
+  dispatch,
+  getState
+) => {
+  const priorityList = getState().games.priority;
+  const newPriorityList = priorityList.includes(gameId)
+    ? priorityList.filter((gameInPriority: string) => gameInPriority !== gameId)
+    : [...priorityList, gameId];
+
+  dispatch(setPriority(newPriorityList));
+};
