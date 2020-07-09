@@ -44,9 +44,9 @@ export const setMerchantFilter = (
   payload: merchantsIds,
 });
 
-export const setPriority = (gameIds: string[]): SetPriorityAction => ({
+export const setPriority = (gamesIds: string[]): SetPriorityAction => ({
   type: GAMES_TYPES['SET_PRIORITY'],
-  payload: gameIds,
+  payload: gamesIds,
 });
 
 export const setSearchQuery = (subString: string): SetSearchQuery => ({
