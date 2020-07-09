@@ -14,6 +14,12 @@ const SelectFavorite: FC<SelectFavoriteProps> = () => {
     ({ games }) => games.filters.byFavorite
   );
 
+  const hasFavorites = useSelector<AppState, boolean>(
+    ({ favoriteGames }) => !!favoriteGames.list.length
+  );
+
+  if (!hasFavorites) return null;
+
   return (
     <div className="games-selection__field">
       <InputLabel className="games-selection__title" htmlFor={checkboxId}>
