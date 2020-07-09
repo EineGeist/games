@@ -32,7 +32,7 @@ module.exports = {
 
   output: {
     filename: fileName + '.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, isDev ? 'dist' : './build'),
     publicPath: '/',
   },
 
