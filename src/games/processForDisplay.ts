@@ -1,7 +1,7 @@
 import { chunk } from 'lodash';
 import { CategoriesArray } from 'categories/types';
 import { MerchantsArray } from 'merchants/types';
-import { GamesState, GamesArray, GameData } from './types';
+import { GamesState, GamesArray, GameData, SortValue } from './types';
 import { sortStrings, sortStringsReverse } from 'utils';
 
 export default class ProcessForDisplays {
@@ -28,18 +28,18 @@ export default class ProcessForDisplays {
 
     this.gamesState.gamesToDisplay = chunk(
       this.sortGames(this.filterGames(this.gamesState.allGames)),
-      this.gamesState.itemsPerPage
+      this.gamesState.currentGamesPerPage
     );
 
     return this.gamesState;
   }
 
   private sortGames(gamesArray: GamesArray): GamesArray {
-    switch (this.gamesState.sort) {
-      case 'name':
+    switch (this.gamesState.currentSort) {
+      case SortValue['NAME']:
         return gamesArray.sort(this.sortGamesByName);
 
-      case 'name-reverse':
+      case SortValue['NAME_REVERSE']:
         return gamesArray.sort(this.sortGamesByNameReverse);
 
       default:

@@ -1,13 +1,18 @@
 import { Reducer } from 'redux';
 import { FETCH_TYPES, AllFetchActions, FetchSuccessAction } from 'api/types';
-import { GamesState, GAMES_TYPES, AllGamesActions } from './types';
+import { GamesState, GAMES_TYPES, AllGamesActions, SortValue } from './types';
 import ProcessForDisplays from './processForDisplay';
 
 const initialState: GamesState = {
   allGames: [],
   gamesToDisplay: null,
-  itemsPerPage: 20,
-  sort: 'name',
+  gamesPerPage: [10, 20, 40],
+  currentGamesPerPage: 20,
+  sort: [
+    { value: SortValue['NAME'], name: 'By name' },
+    { value: SortValue['NAME_REVERSE'], name: 'By name in reverse order' },
+  ],
+  currentSort: SortValue['NAME'],
   filters: {
     byFavorite: false,
     byCategories: [],
@@ -58,14 +63,14 @@ const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
     case GAMES_TYPES['SET_ITEMS_PER_PAGE']: {
       return processGamesToDisplay.update({
         ...state,
-        itemsPerPage: action.payload,
+        currentGamesPerPage: action.payload,
       });
     }
 
     case GAMES_TYPES['SET_SORT']: {
       return processGamesToDisplay.update({
         ...state,
-        sort: action.payload,
+        currentSort: action.payload,
       });
     }
 

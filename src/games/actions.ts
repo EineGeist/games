@@ -1,6 +1,6 @@
 import {
   GAMES_TYPES,
-  SortOptions,
+  SortValue,
   ToggleFavoriteAction,
   SetItemsPerPageAction,
   SetSortAction,
@@ -20,7 +20,7 @@ export const setItemsPerPage = (maxItems: number): SetItemsPerPageAction => ({
   payload: maxItems,
 });
 
-export const setSort = (sortBy: SortOptions): SetSortAction => ({
+export const setSort = (sortBy: SortValue): SetSortAction => ({
   type: GAMES_TYPES['SET_SORT'],
   payload: sortBy,
 });

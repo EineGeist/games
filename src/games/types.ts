@@ -8,7 +8,13 @@ export interface GameData {
   favorite: boolean;
 }
 
-export type SortOptions = 'name' | 'name-reverse';
+export type GamesArray = GameData[];
+export type ChunkedGamesArray = GamesArray[];
+
+export enum SortValue {
+  NAME = 'name',
+  NAME_REVERSE = 'name-reverse',
+}
 
 export interface Filters {
   byFavorite: boolean;
@@ -16,14 +22,18 @@ export interface Filters {
   byMerchants: string[];
 }
 
-export type GamesArray = GameData[];
-export type ChunkedGamesArray = GamesArray[];
+export interface GamesSort {
+  value: SortValue;
+  name: string;
+}
 
 export interface GamesState {
   allGames: GamesArray;
   gamesToDisplay: ChunkedGamesArray | null;
-  itemsPerPage: number;
-  sort: SortOptions;
+  gamesPerPage: number[];
+  currentGamesPerPage: number;
+  sort: GamesSort[];
+  currentSort: SortValue;
   filters: Filters;
   priority: string[];
 }
@@ -50,7 +60,7 @@ export interface SetItemsPerPageAction {
 
 export interface SetSortAction {
   type: typeof GAMES_TYPES['SET_SORT'];
-  payload: SortOptions;
+  payload: SortValue;
 }
 
 export interface ToggleFavoriteFilter {
