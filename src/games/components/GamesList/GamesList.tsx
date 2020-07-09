@@ -7,13 +7,17 @@ import { FavoriteGamesList } from 'favoriteGames/types';
 export interface GamesListProps {
   games: GamesArray;
   favoriteGames: FavoriteGamesList;
+  gamesInPriority: string[];
   onToggleFavorite: (id: string) => void;
+  onTogglePriority: (id: string) => void;
 }
 
 const GamesList: FC<GamesListProps> = ({
   games,
   favoriteGames,
+  gamesInPriority,
   onToggleFavorite,
+  onTogglePriority,
 }) => {
   return (
     <ul className="games-list">
@@ -24,7 +28,9 @@ const GamesList: FC<GamesListProps> = ({
             imageUrl={game.imageFullPath}
             gameUrl={game.url}
             isFavorite={favoriteGames.includes(game.id)}
+            inPriority={gamesInPriority.includes(game.id)}
             onFavoriteClick={() => onToggleFavorite(game.id)}
+            onPriorityClick={() => onTogglePriority(game.id)}
           />
         </li>
       ))}

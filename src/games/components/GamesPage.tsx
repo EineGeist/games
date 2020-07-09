@@ -9,6 +9,7 @@ import './GamesPage.scss';
 import GamesHeader from './GamesHeader';
 import GamesList from './GamesList/GamesList';
 import GamesFooter from './GamesFooter';
+import { togglePriority } from 'games/actions';
 
 const GamesPage: FC = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ const GamesPage: FC = () => {
 
   const favoriteGames = useSelector<AppState, FavoriteGamesList>(
     ({ favoriteGames }) => favoriteGames.list
+  );
+
+  const gamesInPriority = useSelector<AppState, string[]>(
+    ({ games }) => games.priority
   );
 
   let gamesToDisplayChanged = false;
@@ -47,7 +52,9 @@ const GamesPage: FC = () => {
         <GamesList
           games={gamesToDisplay[page - 1]}
           favoriteGames={favoriteGames}
+          gamesInPriority={gamesInPriority}
           onToggleFavorite={gameId => dispatch(toggleFavoriteGame(gameId))}
+          onTogglePriority={gameId => dispatch(togglePriority(gameId))}
         />
       ) : null}
       <GamesFooter page={page!} numberOfPages={gamesToDisplay?.length || 0} />

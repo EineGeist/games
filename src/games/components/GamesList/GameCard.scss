@@ -1,12 +1,45 @@
 @import 'utils';
 
 $card-border-color: get-color(grey);
-$favorite-button-size: 1.5em;
 $figure-caption-padding: 1rem;
+$button-size: 1.5em;
 
-.game-card {
+@mixin styleCard($color, $button-class) {
+  border-color: $color;
+
+  .game-card__image {
+    border-color: $color;
+  }
+
+  .game-card__link:hover {
+    border-color: $color;
+    background-color: $color;
+  }
+
+  .game-card__#{$button-class}-button {
+    border-color: $color;
+    background-color: $color;
+    color: get-color(light);
+
+    &:focus,
+    &:hover {
+      background-color: get-color(light);
+      color: $color;
+    }
+  }
+}
+
+[class|='game-card'] {
   box-sizing: border-box;
   border: 2px solid $card-border-color;
+
+  &[class*='--favorite'] {
+    @include styleCard(get-color(primary), 'favorite');
+  }
+
+  &[class*='--priority'] {
+    @include styleCard(get-color(additional), 'priority');
+  }
 }
 
 .game-card__figure {
@@ -35,7 +68,7 @@ $figure-caption-padding: 1rem;
 .game-card__name {
   box-sizing: border-box;
   margin: 0;
-  padding: 0 $favorite-button-size;
+  padding: 0 $button-size;
   width: 100%;
   text-align: center;
   word-wrap: break-word;
@@ -56,18 +89,26 @@ $figure-caption-padding: 1rem;
   }
 }
 
-.game-card__favorite {
-  box-sizing: border-box;
+.game-card__buttons-container {
   position: absolute;
   top: $figure-caption-padding;
   right: $figure-caption-padding;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: $button-size * 2.25;
+}
+
+.game-card__favorite-button,
+.game-card__priority-button {
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: $favorite-button-size;
-  height: $favorite-button-size;
+  width: $button-size;
+  height: $button-size;
   margin: 0;
 
   border: 1px solid get-color(grey);
@@ -77,23 +118,20 @@ $figure-caption-padding: 1rem;
 
   line-height: 1;
   cursor: pointer;
+}
 
+.game-card__priority-button {
+  &:focus,
+  &:hover {
+    border-color: get-color(additional);
+    color: get-color(additional);
+  }
+}
+
+.game-card__favorite-button {
   &:focus,
   &:hover {
     border-color: get-color(primary);
     color: get-color(primary);
-  }
-}
-
-.game-card__favorite--favorite {
-  @extend .game-card__favorite;
-
-  border-color: get-color(primary);
-  background-color: get-color(primary);
-  color: get-color(light);
-
-  &:focus,
-  &:hover {
-    background-color: get-color(light);
   }
 }
