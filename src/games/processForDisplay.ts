@@ -29,7 +29,7 @@ export default class ProcessForDisplays {
       !this.gamesState.filters.byMerchants.length;
 
     this.gamesState.gamesToDisplay = chunk(
-      this.sortGames(this.filterGames(this.gamesState.allGames)),
+      this.filterGames(this.sortGames(this.gamesState.allGames)),
       this.gamesState.currentGamesPerPage
     );
 
@@ -60,31 +60,38 @@ export default class ProcessForDisplays {
   private filterGames(gamesArray: GamesArray): GamesArray {
     if (!this.shouldFilter()) return gamesArray;
 
-    const { priorityGames, otherGames } = this.gamesState.allGames.reduce<{
+    const {
+      priorityGames,
+      favoriteGames,
+      otherGames,
+    } = this.gamesState.allGames.reduce<{
       priorityGames: GamesArray;
+      favoriteGames: GamesArray;
       otherGames: GamesArray;
     }>(
       (acc, game) => {
         if (this.checkGameForPriority(game)) {
           acc.priorityGames.push(game);
-        } else if (this.checkGame(game)) {
-          acc.otherGames.push(game);
+        }
+
+        if (this.checkGame(game)) {
+          if (this.checkGameForFavorite(game)) acc.favoriteGames.push(game);
+          else acc.otherGames.push(game);
         }
 
         return acc;
       },
-      { priorityGames: [], otherGames: [] }
+      { priorityGames: [], favoriteGames: [], otherGames: [] }
     );
 
-    return [...priorityGames, ...otherGames];
+    return [...priorityGames, ...favoriteGames, ...otherGames];
   }
 
   private checkGame(game: GameData): boolean {
     return (
       this.checkGameForSearchQuery(game) &&
       this.checkGameForCategory(game) &&
-      this.checkGameForMerchant(game) &&
-      this.checkGameForFavorite(game)
+      this.checkGameForMerchant(game)
     );
   }
 
@@ -109,9 +116,7 @@ export default class ProcessForDisplays {
   }
 
   private checkGameForFavorite(game: GameData): boolean {
-    return (
-      this.gamesState.filters.byFavorite && this.favoriteGames.includes(game.id)
-    );
+    return this.favoriteGames.includes(game.id);
   }
 
   private checkGameForSearchQuery(game: GameData): boolean {
@@ -122,10 +127,12 @@ export default class ProcessForDisplays {
     const {
       getAllCategories,
       getAllMerchants,
+      favoriteGames,
       gamesState: { filters, priority, searchQuery },
     } = this;
 
     return (
+      !!favoriteGames.length ||
       !!searchQuery ||
       !getAllCategories ||
       !getAllMerchants ||
