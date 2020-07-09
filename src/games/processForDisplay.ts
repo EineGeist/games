@@ -79,6 +79,7 @@ export default class ProcessForDisplays {
 
   private checkGame(game: GameData): boolean {
     return (
+      this.checkGameForSearchQuery(game) &&
       this.checkGameForCategory(game) &&
       this.checkGameForMerchant(game) &&
       this.checkGameForFavorite(game)
@@ -109,14 +110,19 @@ export default class ProcessForDisplays {
     return !(this.gamesState.filters.byFavorite && !game.favorite);
   }
 
+  private checkGameForSearchQuery(game: GameData): boolean {
+    return game.name.toLowerCase().includes(this.gamesState.searchQuery);
+  }
+
   private shouldFilter(): boolean {
     const {
       getAllCategories,
       getAllMerchants,
-      gamesState: { filters, priority },
+      gamesState: { filters, priority, searchQuery },
     } = this;
 
     return (
+      !!searchQuery ||
       !getAllCategories ||
       !getAllMerchants ||
       filters.byFavorite ||

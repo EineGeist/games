@@ -19,6 +19,7 @@ const initialState: GamesState = {
     byMerchants: [],
   },
   priority: [],
+  searchQuery: '',
 };
 
 let processGamesToDisplay: ProcessForDisplays;
@@ -108,6 +109,13 @@ const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
       return processGamesToDisplay.update({
         ...state,
         priority: action.payload,
+      });
+    }
+
+    case GAMES_TYPES['SET_SEARCH_QUERY']: {
+      return processGamesToDisplay.update({
+        ...state,
+        searchQuery: action.payload.toLowerCase(),
       });
     }
 

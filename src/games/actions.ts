@@ -8,6 +8,7 @@ import {
   SetCategoryFilterAction,
   SetMerchantFilterAction,
   SetPriorityAction,
+  SetSearchQuery,
 } from './types';
 
 export const toggleFavorite = (gameId: string): ToggleFavoriteAction => ({
@@ -46,4 +47,9 @@ export const setMerchantFilter = (
 export const setPriority = (gameIds: string[]): SetPriorityAction => ({
   type: GAMES_TYPES['SET_PRIORITY'],
   payload: gameIds,
+});
+
+export const setSearchQuery = (subString: string): SetSearchQuery => ({
+  type: GAMES_TYPES['SET_SEARCH_QUERY'],
+  payload: subString,
 });

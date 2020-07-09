@@ -36,6 +36,7 @@ export interface GamesState {
   currentSort: SortValue;
   filters: Filters;
   priority: string[];
+  searchQuery: string;
 }
 
 export enum GAMES_TYPES {
@@ -46,6 +47,7 @@ export enum GAMES_TYPES {
   SET_CATEGORY_FILTER = 'GAMES/SET_CATEGORY_FILTER',
   SET_MERCHANT_FILTER = 'GAMES/SET_MERCHANT_FILTER',
   SET_PRIORITY = 'GAMES/SET_PRIORITY',
+  SET_SEARCH_QUERY = 'GAMES/SET_SEARCH_QUERY',
 }
 
 export interface ToggleFavoriteAction {
@@ -82,6 +84,11 @@ export interface SetPriorityAction {
   payload: string[];
 }
 
+export interface SetSearchQuery {
+  type: typeof GAMES_TYPES['SET_SEARCH_QUERY'];
+  payload: string;
+}
+
 export type AllGamesActions =
   | ToggleFavoriteAction
   | SetItemsPerPageAction
@@ -89,4 +96,5 @@ export type AllGamesActions =
   | ToggleFavoriteFilter
   | SetCategoryFilterAction
   | SetMerchantFilterAction
-  | SetPriorityAction;
+  | SetPriorityAction
+  | SetSearchQuery;

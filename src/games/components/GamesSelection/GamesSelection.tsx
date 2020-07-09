@@ -5,6 +5,7 @@ import SelectCategories from './SelectCategories';
 import SelectMerchants from './SelectMerchants';
 import SelectSort from './SelectSort';
 import SelectFavorite from './SelectFavorite';
+import Search from './Search';
 
 const GamesSelection: FC = () => {
   return (
@@ -29,7 +30,9 @@ const GamesSelection: FC = () => {
           <div className="game-selection__display-column">
             <SelectItemsPerPage />
           </div>
-          <div className="game-selection__display-column"></div>
+          <div className="game-selection__display-column">
+            <Search />
+          </div>
         </div>
       </fieldset>
     </div>
