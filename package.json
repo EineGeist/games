@@ -11,6 +11,7 @@
   "author": "Ivan Dovzhikov <einegeist@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",

@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import 'normalize.css';
@@ -8,12 +8,10 @@ import store from 'store/store';
 import { Provider } from 'react-redux';
 
 ReactDOM.render(
-  <StrictMode>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </StrictMode>,
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('app')
 );
