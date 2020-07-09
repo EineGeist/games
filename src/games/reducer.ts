@@ -7,7 +7,11 @@ import {
 } from 'api/types';
 import { GamesState, GAMES_TYPES, AllGamesActions, SortValue } from './types';
 import ProcessForDisplays from './processForDisplay';
-import { FavoriteGamesList } from 'favoriteGames/types';
+import {
+  FavoriteGamesList,
+  FavoriteGamesTypes,
+  SetFavoriteGamesAction,
+} from 'favoriteGames/types';
 
 const initialState: GamesState = {
   allGames: [],
@@ -31,10 +35,10 @@ const initialState: GamesState = {
 let processGamesToDisplay: ProcessForDisplays;
 let favoriteGames: FavoriteGamesList;
 
-const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
-  state = initialState,
-  action
-) => {
+const gamesReducer: Reducer<
+  GamesState,
+  AllFetchActions | AllGamesActions | SetFavoriteGamesAction
+> = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TYPES['FETCH_DATA']: {
       if (action.meta.status === 'pending')
@@ -56,6 +60,10 @@ const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
       );
 
       return processGamesToDisplay.update(newState);
+    }
+
+    case FavoriteGamesTypes['SET_FAVORITE_GAMES']: {
+      return processGamesToDisplay.update(state, action.payload);
     }
 
     case GAMES_TYPES['SET_ITEMS_PER_PAGE']: {

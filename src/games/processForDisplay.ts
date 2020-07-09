@@ -16,7 +16,14 @@ export default class ProcessForDisplays {
     private gamesState: GamesState
   ) {}
 
-  update(gamesState: GamesState): GamesState {
+  update(
+    gamesState: GamesState,
+    favoriteGames?: FavoriteGamesList
+  ): GamesState {
+    if (favoriteGames) {
+      this.favoriteGames = favoriteGames;
+    }
+
     this.gamesState = gamesState;
 
     this.getAllCategories =
@@ -28,12 +35,13 @@ export default class ProcessForDisplays {
       this.gamesState.filters.byMerchants.length === this.allMerchants.length ||
       !this.gamesState.filters.byMerchants.length;
 
-    this.gamesState.gamesToDisplay = chunk(
-      this.filterGames(this.sortGames(this.gamesState.allGames)),
-      this.gamesState.currentGamesPerPage
-    );
-
-    return this.gamesState;
+    return {
+      ...this.gamesState,
+      gamesToDisplay: chunk(
+        this.filterGames(this.sortGames(this.gamesState.allGames)),
+        this.gamesState.currentGamesPerPage
+      ),
+    };
   }
 
   private sortGames(gamesArray: GamesArray): GamesArray {
@@ -70,13 +78,23 @@ export default class ProcessForDisplays {
       otherGames: GamesArray;
     }>(
       (acc, game) => {
-        if (this.checkGameForPriority(game)) {
-          acc.priorityGames.push(game);
-        }
+        const checkResult = this.checkGame(game);
+        if (!checkResult) return acc;
 
-        if (this.checkGame(game)) {
-          if (this.checkGameForFavorite(game)) acc.favoriteGames.push(game);
-          else acc.otherGames.push(game);
+        const { inPriority, isFavorite } = checkResult;
+
+        if (this.gamesState.filters.byFavorite) {
+          if (isFavorite) {
+            acc.favoriteGames.push(game);
+          }
+        } else {
+          if (inPriority) {
+            acc.priorityGames.push(game);
+          } else if (isFavorite) {
+            acc.favoriteGames.push(game);
+          } else {
+            acc.otherGames.push(game);
+          }
         }
 
         return acc;
@@ -87,11 +105,21 @@ export default class ProcessForDisplays {
     return [...priorityGames, ...favoriteGames, ...otherGames];
   }
 
-  private checkGame(game: GameData): boolean {
+  private checkGame(
+    game: GameData
+  ):
+    | {
+        inPriority: boolean;
+        isFavorite: boolean;
+      }
+    | false {
     return (
       this.checkGameForSearchQuery(game) &&
       this.checkGameForCategory(game) &&
-      this.checkGameForMerchant(game)
+      this.checkGameForMerchant(game) && {
+        inPriority: this.checkGameForPriority(game),
+        isFavorite: this.checkGameForFavorite(game),
+      }
     );
   }
 
