@@ -1,6 +1,7 @@
 import { chunk } from 'lodash';
 import { CategoriesArray } from 'categories/types';
 import { MerchantsArray } from 'merchants/types';
+import { FavoriteGamesList } from 'favoriteGames/types';
 import { GamesState, GamesArray, GameData, SortValue } from './types';
 import { sortStrings, sortStringsReverse } from 'utils';
 
@@ -11,6 +12,7 @@ export default class ProcessForDisplays {
   constructor(
     private allCategories: CategoriesArray,
     private allMerchants: MerchantsArray,
+    private favoriteGames: FavoriteGamesList,
     private gamesState: GamesState
   ) {}
 
@@ -107,7 +109,9 @@ export default class ProcessForDisplays {
   }
 
   private checkGameForFavorite(game: GameData): boolean {
-    return !(this.gamesState.filters.byFavorite && !game.favorite);
+    return (
+      this.gamesState.filters.byFavorite && this.favoriteGames.includes(game.id)
+    );
   }
 
   private checkGameForSearchQuery(game: GameData): boolean {

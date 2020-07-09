@@ -4,6 +4,7 @@ import { AppState } from 'store/types';
 import { GameData } from 'games/types';
 import { CategoryData } from 'categories/types';
 import { MerchantData } from 'merchants/types';
+import { FavoriteGamesList } from 'favoriteGames/types';
 
 export interface FetchedData {
   games: GameData[];
@@ -24,7 +25,9 @@ interface FetchAction<S extends string> {
   };
 }
 
-export interface FetchPendingAction extends FetchAction<'pending'> {}
+export interface FetchPendingAction extends FetchAction<'pending'> {
+  payload: FavoriteGamesList;
+}
 
 export interface FetchSuccessAction extends FetchAction<'success'> {
   payload: FetchedData;

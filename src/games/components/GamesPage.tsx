@@ -1,15 +1,14 @@
 import React, { FC, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { ELLIPSIS_CHAR } from 'utils';
 import { AppState } from 'store/types';
 import { GamesState } from 'games/types';
-import { toggleFavorite } from 'games/actions';
+import { FavoriteGamesList } from 'favoriteGames/types';
+import { toggleFavoriteGame } from 'favoriteGames/actions';
 import './GamesPage.scss';
 import GamesHeader from './GamesHeader';
 import GamesList from './GamesList/GamesList';
 import GamesFooter from './GamesFooter';
-import { toggleFavorite } from 'games/actions';
 
 const GamesPage: FC = () => {
   const dispatch = useDispatch();
@@ -18,6 +17,10 @@ const GamesPage: FC = () => {
 
   const gamesToDisplay = useSelector<AppState, GamesState['gamesToDisplay']>(
     ({ games }) => games.gamesToDisplay
+  );
+
+  const favoriteGames = useSelector<AppState, FavoriteGamesList>(
+    ({ favoriteGames }) => favoriteGames.list
   );
 
   let gamesToDisplayChanged = false;
@@ -43,7 +46,8 @@ const GamesPage: FC = () => {
       {shouldRenderGamesList ? (
         <GamesList
           games={gamesToDisplay[page - 1]}
-          onToggleFavorite={gameId => dispatch(toggleFavorite(gameId))}
+          favoriteGames={favoriteGames}
+          onToggleFavorite={gameId => dispatch(toggleFavoriteGame(gameId))}
         />
       ) : null}
       <GamesFooter page={page!} numberOfPages={gamesToDisplay?.length || 0} />

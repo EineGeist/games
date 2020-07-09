@@ -1,7 +1,13 @@
 import { Reducer } from 'redux';
-import { FETCH_TYPES, AllFetchActions, FetchSuccessAction } from 'api/types';
+import {
+  FETCH_TYPES,
+  AllFetchActions,
+  FetchSuccessAction,
+  FetchPendingAction,
+} from 'api/types';
 import { GamesState, GAMES_TYPES, AllGamesActions, SortValue } from './types';
 import ProcessForDisplays from './processForDisplay';
+import { FavoriteGamesList } from 'favoriteGames/types';
 
 const initialState: GamesState = {
   allGames: [],
@@ -23,6 +29,7 @@ const initialState: GamesState = {
 };
 
 let processGamesToDisplay: ProcessForDisplays;
+let favoriteGames: FavoriteGamesList;
 
 const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
   state = initialState,
@@ -30,6 +37,9 @@ const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
 ) => {
   switch (action.type) {
     case FETCH_TYPES['FETCH_DATA']: {
+      if (action.meta.status === 'pending')
+        favoriteGames = (action as FetchPendingAction).payload;
+
       if (action.meta.status !== 'success') return state;
       const { payload } = action as FetchSuccessAction;
 
@@ -41,24 +51,11 @@ const gamesReducer: Reducer<GamesState, AllFetchActions | AllGamesActions> = (
       processGamesToDisplay = new ProcessForDisplays(
         payload.categories,
         Object.values(payload.merchants),
+        favoriteGames,
         newState
       );
 
       return processGamesToDisplay.update(newState);
-    }
-
-    case GAMES_TYPES['TOGGLE_FAVORITE']: {
-      const allGames = [...state.allGames];
-      const gameIndex = allGames.findIndex(game => game.id === action.payload);
-      const game = { ...allGames[gameIndex] };
-
-      game.favorite = !game.favorite;
-      allGames[gameIndex] = game;
-
-      return processGamesToDisplay.update({
-        ...state,
-        allGames,
-      });
     }
 
     case GAMES_TYPES['SET_ITEMS_PER_PAGE']: {
