@@ -33,7 +33,7 @@ module.exports = {
   output: {
     filename: fileName + '.js',
     path: path.resolve(__dirname, isDev ? 'dist' : './build'),
-    publicPath: '/',
+    publicPath: isDev ? '/' : '/games/',
   },
 
   optimization: optimization(),
