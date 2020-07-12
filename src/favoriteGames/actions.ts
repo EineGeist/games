@@ -1,16 +1,13 @@
+import { createAction } from 'utils';
 import {
   FAVORITE_GAMES_TYPES,
-  FavoriteGamesList,
   SetFavoriteGamesAction,
   ToggleFavoriteGameThunk,
 } from './types';
 
-export const setFavoriteGames = (
-  favoriteGames: FavoriteGamesList
-): SetFavoriteGamesAction => ({
-  type: FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES'],
-  payload: favoriteGames,
-});
+export const setFavoriteGames = createAction<SetFavoriteGamesAction>(
+  FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES']
+);
 
 export const toggleFavoriteGame: ToggleFavoriteGameThunk = (gameId: string) => (
   dispatch,
@@ -21,5 +18,5 @@ export const toggleFavoriteGame: ToggleFavoriteGameThunk = (gameId: string) => (
     ? list.filter((favoriteGame: string) => favoriteGame !== gameId)
     : [...list, gameId];
 
-  dispatch(setFavoriteGames(newList));
+  dispatch(setFavoriteGames({ list: newList }));
 };

@@ -133,7 +133,7 @@ const gamesListReducer: Reducer<
 
     case FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES']: {
       return process.update(state, {
-        favoriteGames: action.payload,
+        favoriteGames: action.payload.list,
       });
     }
 

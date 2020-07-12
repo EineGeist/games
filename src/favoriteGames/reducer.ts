@@ -18,7 +18,7 @@ const favoriteGamesReducer: Reducer<
     case FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES']: {
       return {
         ...state,
-        list: action.payload,
+        list: action.payload.list,
       };
     }
 

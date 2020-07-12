@@ -14,7 +14,7 @@ export enum FAVORITE_GAMES_TYPES {
 
 export interface SetFavoriteGamesAction {
   type: typeof FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES'];
-  payload: FavoriteGamesList;
+  payload: { list: FavoriteGamesList };
 }
 
 export type AllFavoriteGamesActions = SetFavoriteGamesAction;
