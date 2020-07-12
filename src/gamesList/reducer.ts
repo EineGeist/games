@@ -120,7 +120,7 @@ const gamesListReducer: Reducer<
         ...state,
         filter: {
           ...state.filter,
-          bySearchQuery: action.payload.query,
+          bySearchQuery: action.payload.query.trim(),
         },
       });
     }
