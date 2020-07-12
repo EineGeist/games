@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import { AppState } from 'store/types';
-import { setItemsPerPage } from 'games/actions';
+import { setGamesPerPage } from 'gamesList/actions';
 
 const SelectItemsPerPage: FC = () => {
   const dispatch = useDispatch();
@@ -14,9 +14,9 @@ const SelectItemsPerPage: FC = () => {
       current: number;
       options: number[];
     }
-  >(({ games }) => ({
-    current: games.currentGamesPerPage,
-    options: games.gamesPerPage,
+  >(({ gamesList }) => ({
+    current: gamesList.gamesPerPage,
+    options: gamesList.gamesPerPageOptions,
   }));
 
   return (
@@ -27,7 +27,9 @@ const SelectItemsPerPage: FC = () => {
       <Select
         labelId={labelId}
         onChange={event => {
-          dispatch(setItemsPerPage(+(event.target.value as string)));
+          dispatch(
+            setGamesPerPage({ gamesPerPage: +(event.target.value as string) })
+          );
         }}
         value={current}
       >

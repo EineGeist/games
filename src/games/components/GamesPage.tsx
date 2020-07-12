@@ -10,14 +10,15 @@ import GamesHeader from './GamesHeader';
 import GamesList from './GamesList/GamesList';
 import GamesFooter from './GamesFooter';
 import { togglePriority } from 'games/actions';
+import { GamesListState } from 'gamesList/types';
 
 const GamesPage: FC = () => {
   const dispatch = useDispatch();
   const params = useParams<{ page: string }>();
   const page = parseInt(params.page, 10);
 
-  const gamesToDisplay = useSelector<AppState, GamesState['gamesToDisplay']>(
-    ({ games }) => games.gamesToDisplay
+  const gamesToDisplay = useSelector<AppState, GamesListState['list']>(
+    ({ gamesList }) => gamesList.list
   );
 
   const favoriteGames = useSelector<AppState, FavoriteGamesList>(

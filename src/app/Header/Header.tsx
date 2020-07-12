@@ -6,22 +6,20 @@ import { AppState } from 'store/types';
 
 interface AmountOfGames {
   totalGames: number;
-  displayedGames: number;
+  gamesInList: number;
 }
 
 const Header: FC = () => {
-  const { totalGames, displayedGames } = useSelector<AppState, AmountOfGames>(
-    ({ games: { allGames, gamesToDisplay } }) => ({
-      totalGames: allGames.length,
-      displayedGames: gamesToDisplay
-        ? sum(gamesToDisplay.map(chunk => chunk.length))
-        : allGames.length,
+  const { totalGames, gamesInList } = useSelector<AppState, AmountOfGames>(
+    ({ games, gamesList }) => ({
+      totalGames: games.games.length,
+      gamesInList: sum(gamesList.list.map(chunk => chunk.length)),
     })
   );
 
   return (
     <header className="app-header">
-      {displayedGames}/{totalGames}
+      {gamesInList}/{totalGames}
     </header>
   );
 };

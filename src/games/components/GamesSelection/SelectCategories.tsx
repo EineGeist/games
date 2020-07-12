@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import { AppState } from 'store/types';
-import { setCategoryFilter } from 'games/actions';
 import { CategoriesArray } from 'categories/types';
+import { setCategoriesFilter } from 'gamesList/actions';
 
 const SelectCategories: FC = () => {
   const dispatch = useDispatch();
@@ -15,9 +15,9 @@ const SelectCategories: FC = () => {
       selectedCategories: CategoriesArray;
       allCategories: CategoriesArray;
     }
-  >(({ games, categories }) => ({
+  >(({ gamesList, categories }) => ({
     selectedCategories: categories.filter(category =>
-      games.filters.byCategories.includes(category.id)
+      gamesList.filter.byCategories.includes(category.id)
     ),
     allCategories: categories,
   }));
@@ -32,7 +32,9 @@ const SelectCategories: FC = () => {
         value={selectedCategories.map(selected => selected.id)}
         labelId={labelId}
         onChange={event => {
-          dispatch(setCategoryFilter(event.target.value as string[]));
+          dispatch(
+            setCategoriesFilter({ categories: event.target.value as string[] })
+          );
         }}
         renderValue={selected => (
           <div className="games-selection__select-selected">

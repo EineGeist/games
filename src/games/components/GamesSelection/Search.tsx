@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField, InputLabel } from '@material-ui/core';
 import { throttle } from 'lodash';
 import { AppState } from 'store/types';
-import { setSearchQuery } from 'games/actions';
+import { setSearchQuery } from 'gamesList/actions';
 
 export const Search: FC = () => {
   const dispatch = useDispatch();
   const textFieldId = 'search-game';
 
   const currentSearchQuery = useSelector<AppState, string>(
-    ({ games }) => games.searchQuery
+    ({ gamesList }) => gamesList.filter.bySearchQuery
   );
 
   const [currentValue, setCurrentValue] = useState(currentSearchQuery);
   const delayedQuery = useRef(
-    throttle((query: string) => dispatch(setSearchQuery(query)), 500)
+    throttle((query: string) => dispatch(setSearchQuery({ query })), 500)
   ).current;
 
   return (

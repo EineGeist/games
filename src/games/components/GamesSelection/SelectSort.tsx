@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import { AppState } from 'store/types';
-import { SortValue, GamesSort } from 'games/types';
-import { setSort } from 'games/actions';
+import { SortOption, SORT_OPTIONS } from 'gamesList/types';
+import { setGamesSort } from 'gamesList/actions';
 
 const SelectSort: FC = () => {
   const dispatch = useDispatch();
@@ -12,12 +12,12 @@ const SelectSort: FC = () => {
   const { current, options } = useSelector<
     AppState,
     {
-      current: SortValue;
-      options: GamesSort[];
+      current: SORT_OPTIONS;
+      options: SortOption[];
     }
-  >(({ games }) => ({
-    current: games.currentSort,
-    options: games.sort,
+  >(({ gamesList }) => ({
+    current: gamesList.sort,
+    options: gamesList.sortOptions,
   }));
 
   return (
@@ -28,7 +28,7 @@ const SelectSort: FC = () => {
       <Select
         labelId={labelId}
         onChange={event => {
-          dispatch(setSort(event.target.value as SortValue));
+          dispatch(setGamesSort({ sort: event.target.value as SORT_OPTIONS }));
         }}
         value={current}
       >

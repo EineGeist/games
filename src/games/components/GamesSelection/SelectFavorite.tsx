@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputLabel, Checkbox } from '@material-ui/core';
 import { AppState } from 'store/types';
-import { toggleFavoriteFilter } from 'games/actions';
+import { toggleFavoriteFilter } from 'gamesList/actions';
 
 export interface SelectFavoriteProps {}
 
@@ -11,7 +11,7 @@ const SelectFavorite: FC<SelectFavoriteProps> = () => {
   const checkboxId = 'filter-by-favorite';
 
   const state = useSelector<AppState, boolean>(
-    ({ games }) => games.filters.byFavorite
+    ({ gamesList }) => gamesList.filter.byFavorite
   );
 
   const hasFavorites = useSelector<AppState, boolean>(

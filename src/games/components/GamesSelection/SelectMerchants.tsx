@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import { AppState } from 'store/types';
 import { MerchantsArray } from 'merchants/types';
-import { setMerchantFilter } from 'games/actions';
+import { setMerchantsFilter } from 'gamesList/actions';
 
 const SelectCategories: FC = () => {
   const dispatch = useDispatch();
@@ -15,12 +15,12 @@ const SelectCategories: FC = () => {
       selectedMerchants: MerchantsArray;
       allMerchants: MerchantsArray;
     }
-  >(({ games, merchants: merchantsNormalized }) => {
+  >(({ gamesList, merchants: merchantsNormalized }) => {
     const merchants = Object.values(merchantsNormalized);
 
     return {
       selectedMerchants: merchants.filter(merchant =>
-        games.filters.byMerchants.includes(merchant.id)
+        gamesList.filter.byMerchants.includes(merchant.id)
       ),
       allMerchants: merchants,
     };
@@ -36,7 +36,9 @@ const SelectCategories: FC = () => {
         value={selectedMerchants.map(selected => selected.id)}
         labelId={labelId}
         onChange={event => {
-          dispatch(setMerchantFilter(event.target.value as string[]));
+          dispatch(
+            setMerchantsFilter({ merchants: event.target.value as string[] })
+          );
         }}
         renderValue={selected => (
           <div className="games-selection__select-selected">
