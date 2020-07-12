@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import {
-  FavoriteGamesTypes,
+  FAVORITE_GAMES_TYPES,
   FavoritesGamesState,
   AllFavoriteGamesActions,
 } from './types';
@@ -15,7 +15,7 @@ const favoriteGamesReducer: Reducer<
   AllFavoriteGamesActions
 > = (state = initialState, action) => {
   switch (action.type) {
-    case FavoriteGamesTypes['SET_FAVORITE_GAMES']: {
+    case FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES']: {
       return {
         ...state,
         list: action.payload,

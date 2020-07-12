@@ -1,5 +1,5 @@
 import {
-  FavoriteGamesTypes,
+  FAVORITE_GAMES_TYPES,
   FavoriteGamesList,
   SetFavoriteGamesAction,
   ToggleFavoriteGameThunk,
@@ -8,7 +8,7 @@ import {
 export const setFavoriteGames = (
   favoriteGames: FavoriteGamesList
 ): SetFavoriteGamesAction => ({
-  type: FavoriteGamesTypes['SET_FAVORITE_GAMES'],
+  type: FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES'],
   payload: favoriteGames,
 });
 

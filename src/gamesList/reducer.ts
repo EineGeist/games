@@ -6,7 +6,7 @@ import {
   FETCH_TYPES,
 } from 'api/types';
 import {
-  FavoriteGamesTypes,
+  FAVORITE_GAMES_TYPES,
   SetFavoriteGamesAction,
 } from 'favoriteGames/types';
 import {
@@ -131,7 +131,7 @@ const gamesListReducer: Reducer<
       });
     }
 
-    case FavoriteGamesTypes['SET_FAVORITE_GAMES']: {
+    case FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES']: {
       return process.update(state, {
         favoriteGames: action.payload,
       });
