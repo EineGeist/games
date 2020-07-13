@@ -60,7 +60,7 @@ const gamesListReducer: Reducer<
       return process.update(state, {
         allGames: games,
         allCategories: categories,
-        allMerchants: Object.values(merchants),
+        allMerchants: merchants,
       });
     }
 

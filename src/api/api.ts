@@ -53,11 +53,12 @@ class Api {
       })
     );
 
-    const processedMerchants: FetchedData['merchants'] = {};
-
-    for (const { ID: id, Name: name } of Object.values(merchants) as any) {
-      processedMerchants[id] = { id, name };
-    }
+    const processedMerchants: FetchedData['merchants'] = Object.values(
+      merchants
+    ).map((merchant: any) => ({
+      id: merchant.ID,
+      name: merchant.Name,
+    }));
 
     return {
       games: processedGames,

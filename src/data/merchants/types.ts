@@ -4,7 +4,4 @@ export interface MerchantData {
 }
 
 export type MerchantsArray = MerchantData[];
-
-export interface MerchantsState {
-  [prop: string]: MerchantData;
-}
+export type MerchantsState = MerchantsArray;

@@ -15,9 +15,7 @@ const SelectCategories: FC = () => {
       selectedMerchants: MerchantsArray;
       allMerchants: MerchantsArray;
     }
-  >(({ gamesList, merchants: merchantsNormalized }) => {
-    const merchants = Object.values(merchantsNormalized);
-
+  >(({ gamesList, merchants }) => {
     return {
       selectedMerchants: merchants.filter(merchant =>
         gamesList.filter.byMerchants.includes(merchant.id)

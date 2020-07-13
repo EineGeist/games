@@ -1,16 +1,14 @@
 import { ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { AppState } from 'store/types';
-import { GameData } from 'data/games/types';
-import { CategoryData } from 'data/categories/types';
-import { MerchantData } from 'data/merchants/types';
+import { GamesArray } from 'data/games/types';
+import { CategoriesArray } from 'data/categories/types';
+import { MerchantsArray } from 'data/merchants/types';
 
 export interface FetchedData {
-  games: GameData[];
-  categories: CategoryData[];
-  merchants: {
-    [prop: string]: MerchantData;
-  };
+  games: GamesArray;
+  categories: CategoriesArray;
+  merchants: MerchantsArray;
 }
 
 export enum API_TYPES {

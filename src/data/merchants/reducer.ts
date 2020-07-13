@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import { API_TYPES, FetchAction, FetchSuccessAction } from 'api/types';
 import { MerchantsState } from './types';
 
-const initialState: MerchantsState = {};
+const initialState: MerchantsState = [];
 
 const merchantsReducer: Reducer<MerchantsState, FetchAction> = (
   state = initialState,
