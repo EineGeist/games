@@ -15,6 +15,7 @@ import { GAMES_TYPES, SetPriorityAction } from 'data/games/types';
 import { LoadStorageAction, LOCAL_STORAGE_TYPES } from 'localStorage/types';
 
 export const initialState: GamesListState = {
+  isFetching: true,
   list: [],
   gamesPerPage: 20,
   gamesPerPageOptions: [10, 20, 40],
@@ -49,6 +50,8 @@ const gamesListReducer: Reducer<
 > = (state = initialState, action) => {
   switch (action.type) {
     case API_TYPES['FETCH_DATA']: {
+      if (action.meta.status === 'error')
+        return { ...state, isFetching: false };
       if (action.meta.status !== 'success') return state;
 
       const {
@@ -57,11 +60,14 @@ const gamesListReducer: Reducer<
         merchants,
       } = (action as FetchSuccessAction).payload;
 
-      return process.update(state, {
-        allGames: games,
-        allCategories: categories,
-        allMerchants: merchants,
-      });
+      return process.update(
+        { ...state, isFetching: false },
+        {
+          allGames: games,
+          allCategories: categories,
+          allMerchants: merchants,
+        }
+      );
     }
 
     case LOCAL_STORAGE_TYPES['LOAD']: {

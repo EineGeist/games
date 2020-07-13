@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { checkForRange } from 'utils';
 import { AppState } from 'store/types';
 import { FavoriteGamesList } from 'data/favoriteGames/types';
 import { toggleFavoriteGame } from 'data/favoriteGames/actions';
@@ -15,6 +16,11 @@ const GamesPage: FC = () => {
   const dispatch = useDispatch();
   const params = useParams<{ page: string }>();
   const page = parseInt(params.page, 10);
+  const history = useHistory();
+
+  const isFetching = useSelector<AppState, boolean>(
+    ({ gamesList }) => gamesList.isFetching
+  );
 
   const gamesList = useSelector<AppState, GamesListState['list']>(
     ({ gamesList }) => gamesList.list
@@ -28,35 +34,30 @@ const GamesPage: FC = () => {
     ({ games }) => games.priority
   );
 
-  let gamesListChanged = false;
-
   useEffect(() => {
-    gamesListChanged = true;
+    // that way passes initial render
+    return () => {
+      if (!isFetching) history.push('/games/1');
+    };
   }, [gamesList]);
 
-  if (
-    gamesListChanged ||
-    !page ||
-    page < 1 ||
-    !gamesList ||
-    page > Math.max(gamesList.length, 1)
-  )
-    return <Redirect to="/games/1" />;
+  if (isFetching) return null;
 
-  const shouldRenderGamesList = gamesList.length;
+  let shouldRedirect =
+    !page || !checkForRange(page, 1, Math.max(1, gamesList.length));
 
-  return (
+  if (shouldRedirect) return <Redirect to="/games/1" />;
+
+  return isFetching ? null : (
     <div className="games-page">
       <GamesHeader page={page} numberOfPages={gamesList.length || 0} />
-      {shouldRenderGamesList ? (
-        <GamesList
-          games={gamesList[page - 1]}
-          favoriteGames={favoriteGames}
-          priorityGames={priorityGames}
-          onToggleFavorite={gameId => dispatch(toggleFavoriteGame(gameId))}
-          onTogglePriority={gameId => dispatch(togglePriority(gameId))}
-        />
-      ) : null}
+      <GamesList
+        games={gamesList[page - 1] || []}
+        favoriteGames={favoriteGames}
+        priorityGames={priorityGames}
+        onToggleFavorite={gameId => dispatch(toggleFavoriteGame(gameId))}
+        onTogglePriority={gameId => dispatch(togglePriority(gameId))}
+      />
       <GamesFooter page={page} numberOfPages={gamesList.length || 0} />
     </div>
   );

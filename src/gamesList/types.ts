@@ -23,6 +23,7 @@ export interface Filter {
 }
 
 export interface GamesListState {
+  isFetching: boolean;
   list: ChunkedGamesArray;
   gamesPerPageOptions: number[];
   gamesPerPage: number;
