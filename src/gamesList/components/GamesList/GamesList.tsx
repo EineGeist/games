@@ -7,7 +7,7 @@ import GameCard from './GameCard';
 export interface GamesListProps {
   games: GamesArray;
   favoriteGames: FavoriteGamesList;
-  gamesInPriority: string[];
+  priorityGames: string[];
   onToggleFavorite: (id: string) => void;
   onTogglePriority: (id: string) => void;
 }
@@ -15,7 +15,7 @@ export interface GamesListProps {
 const GamesList: FC<GamesListProps> = ({
   games,
   favoriteGames,
-  gamesInPriority,
+  priorityGames,
   onToggleFavorite,
   onTogglePriority,
 }) => {
@@ -28,7 +28,7 @@ const GamesList: FC<GamesListProps> = ({
             imageUrl={game.imageFullPath}
             gameUrl={game.url}
             isFavorite={favoriteGames.includes(game.id)}
-            inPriority={gamesInPriority.includes(game.id)}
+            inPriority={priorityGames.includes(game.id)}
             onFavoriteClick={() => onToggleFavorite(game.id)}
             onPriorityClick={() => onTogglePriority(game.id)}
           />

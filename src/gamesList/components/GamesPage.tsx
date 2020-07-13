@@ -16,7 +16,7 @@ const GamesPage: FC = () => {
   const params = useParams<{ page: string }>();
   const page = parseInt(params.page, 10);
 
-  const gamesToDisplay = useSelector<AppState, GamesListState['list']>(
+  const gamesList = useSelector<AppState, GamesListState['list']>(
     ({ gamesList }) => gamesList.list
   );
 
@@ -24,40 +24,40 @@ const GamesPage: FC = () => {
     ({ favoriteGames }) => favoriteGames.list
   );
 
-  const gamesInPriority = useSelector<AppState, string[]>(
+  const priorityGames = useSelector<AppState, string[]>(
     ({ games }) => games.priority
   );
 
-  let gamesToDisplayChanged = false;
+  let gamesListChanged = false;
 
   useEffect(() => {
-    gamesToDisplayChanged = true;
-  }, [gamesToDisplay]);
+    gamesListChanged = true;
+  }, [gamesList]);
 
   if (
-    gamesToDisplayChanged ||
+    gamesListChanged ||
     !page ||
     page < 1 ||
-    !gamesToDisplay ||
-    page > Math.max(gamesToDisplay.length, 1)
+    !gamesList ||
+    page > Math.max(gamesList.length, 1)
   )
     return <Redirect to="/games/1" />;
 
-  const shouldRenderGamesList = gamesToDisplay.length;
+  const shouldRenderGamesList = gamesList.length;
 
   return (
     <div className="games-page">
-      <GamesHeader page={page} numberOfPages={gamesToDisplay?.length || 0} />
+      <GamesHeader page={page} numberOfPages={gamesList.length || 0} />
       {shouldRenderGamesList ? (
         <GamesList
-          games={gamesToDisplay[page - 1]}
+          games={gamesList[page - 1]}
           favoriteGames={favoriteGames}
-          gamesInPriority={gamesInPriority}
+          priorityGames={priorityGames}
           onToggleFavorite={gameId => dispatch(toggleFavoriteGame(gameId))}
           onTogglePriority={gameId => dispatch(togglePriority(gameId))}
         />
       ) : null}
-      <GamesFooter page={page!} numberOfPages={gamesToDisplay?.length || 0} />
+      <GamesFooter page={page} numberOfPages={gamesList.length || 0} />
     </div>
   );
 };
