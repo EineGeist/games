@@ -1,20 +1,27 @@
+import { LoadStorageAction, LOCAL_STORAGE_TYPES } from 'localStorage/types';
 import { Reducer } from 'redux';
 import {
   FAVORITE_GAMES_TYPES,
   FavoritesGamesState,
   AllFavoriteGamesActions,
 } from './types';
-import { favoriteGamesStorage } from './localStorage';
 
 const initialState: FavoritesGamesState = {
-  list: favoriteGamesStorage.load().favoritesList,
+  list: [],
 };
 
 const favoriteGamesReducer: Reducer<
   FavoritesGamesState,
-  AllFavoriteGamesActions
+  AllFavoriteGamesActions | LoadStorageAction
 > = (state = initialState, action) => {
   switch (action.type) {
+    case LOCAL_STORAGE_TYPES['LOAD']: {
+      return {
+        ...state,
+        list: action.payload.state.favoriteGames.list,
+      };
+    }
+
     case FAVORITE_GAMES_TYPES['SET_FAVORITE_GAMES']: {
       return {
         ...state,

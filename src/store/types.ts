@@ -7,6 +7,7 @@ import {
   FavoritesGamesState,
   AllFavoriteGamesActions,
 } from 'favoriteGames/types';
+import { AllLocalStorageActions } from 'localStorage/types';
 
 export interface AppState {
   games: GamesState;
@@ -20,4 +21,5 @@ export type AllActions =
   | AllFetchActions
   | AllGamesActions
   | AllGamesListActions
-  | AllFavoriteGamesActions;
+  | AllFavoriteGamesActions
+  | AllLocalStorageActions;

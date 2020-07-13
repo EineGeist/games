@@ -25,9 +25,7 @@ interface FetchAction<S extends string> {
   };
 }
 
-export interface FetchPendingAction extends FetchAction<'pending'> {
-  payload: FavoriteGamesList;
-}
+export interface FetchPendingAction extends FetchAction<'pending'> {}
 
 export interface FetchSuccessAction extends FetchAction<'success'> {
   payload: FetchedData;

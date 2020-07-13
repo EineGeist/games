@@ -1,10 +1,5 @@
 import { Reducer } from 'redux';
-import {
-  AllFetchActions,
-  FetchPendingAction,
-  FetchSuccessAction,
-  FETCH_TYPES,
-} from 'api/types';
+import { AllFetchActions, FetchSuccessAction, FETCH_TYPES } from 'api/types';
 import {
   FAVORITE_GAMES_TYPES,
   SetFavoriteGamesAction,
@@ -17,6 +12,7 @@ import {
 } from './types';
 import ProcessGamesList from './processList';
 import { GAMES_TYPES, SetPriorityAction } from 'games/types';
+import { LoadStorageAction, LOCAL_STORAGE_TYPES } from 'localStorage/types';
 
 export const initialState: GamesListState = {
   list: [],
@@ -49,15 +45,12 @@ const gamesListReducer: Reducer<
   | AllGamesListActions
   | SetFavoriteGamesAction
   | SetPriorityAction
+  | LoadStorageAction
 > = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TYPES['FETCH_DATA']: {
-      if (action.meta.status === 'pending')
-        process.update(state, {
-          favoriteGames: (action as FetchPendingAction).payload,
-        });
-
       if (action.meta.status !== 'success') return state;
+
       const {
         games,
         categories,
@@ -68,6 +61,12 @@ const gamesListReducer: Reducer<
         allGames: games,
         allCategories: categories,
         allMerchants: Object.values(merchants),
+      });
+    }
+
+    case LOCAL_STORAGE_TYPES['LOAD']: {
+      return process.update(state, {
+        favoriteGames: action.payload.state.favoriteGames.list,
       });
     }
 

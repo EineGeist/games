@@ -1,15 +1,12 @@
 import { FetchDataThunk, FETCH_TYPES } from './types';
 import api from './api';
 
-export const fetchData: FetchDataThunk = () => async (dispatch, getState) => {
+export const fetchData: FetchDataThunk = () => async dispatch => {
   const type = FETCH_TYPES['FETCH_DATA'];
 
   dispatch({
     type,
-    payload: getState().favoriteGames.list,
-    meta: {
-      status: 'pending',
-    },
+    meta: { status: 'pending' },
   });
 
   const response = await api.requestData();
@@ -18,17 +15,13 @@ export const fetchData: FetchDataThunk = () => async (dispatch, getState) => {
     dispatch({
       type,
       payload: response.data,
-      meta: {
-        status: 'success',
-      },
+      meta: { status: 'success' },
     });
   } else {
     dispatch({
       type,
       error: response.error,
-      meta: {
-        status: 'error',
-      },
+      meta: { status: 'error' },
     });
   }
 };
