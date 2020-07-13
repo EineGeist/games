@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { fetchData } from 'api/actions';
 import './App.scss';
 import Header from './Header/Header';
-import GamesPage from 'games/components/GamesPage';
+import GamesPage from 'gamesList/components/GamesPage';
 
 const App: FC = () => {
   const dispatch = useDispatch();

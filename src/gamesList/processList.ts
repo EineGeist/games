@@ -1,8 +1,8 @@
 import { chunk } from 'lodash';
-import { CategoriesArray } from 'categories/types';
-import { MerchantsArray } from 'merchants/types';
-import { FavoriteGamesList } from 'favoriteGames/types';
-import { GamesArray, GameData, ChunkedGamesArray } from 'games/types';
+import { CategoriesArray } from 'data/categories/types';
+import { MerchantsArray } from 'data/merchants/types';
+import { FavoriteGamesList } from 'data/favoriteGames/types';
+import { GamesArray, GameData, ChunkedGamesArray } from 'data/games/types';
 import { GamesListState, SORT_OPTIONS } from './types';
 import { compareStrings, compareStringsReverse } from 'utils';
 

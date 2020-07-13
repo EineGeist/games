@@ -2,60 +2,56 @@ import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import { AppState } from 'store/types';
-import { MerchantsArray } from 'merchants/types';
-import { setMerchantsFilter } from 'gamesList/actions';
+import { CategoriesArray } from 'data/categories/types';
+import { setCategoriesFilter } from 'gamesList/actions';
 
 const SelectCategories: FC = () => {
   const dispatch = useDispatch();
-  const labelId = 'filter-by-merchants';
+  const labelId = 'filter-by-categories';
 
-  const { selectedMerchants, allMerchants } = useSelector<
+  const { selectedCategories, allCategories } = useSelector<
     AppState,
     {
-      selectedMerchants: MerchantsArray;
-      allMerchants: MerchantsArray;
+      selectedCategories: CategoriesArray;
+      allCategories: CategoriesArray;
     }
-  >(({ gamesList, merchants: merchantsNormalized }) => {
-    const merchants = Object.values(merchantsNormalized);
-
-    return {
-      selectedMerchants: merchants.filter(merchant =>
-        gamesList.filter.byMerchants.includes(merchant.id)
-      ),
-      allMerchants: merchants,
-    };
-  });
+  >(({ gamesList, categories }) => ({
+    selectedCategories: categories.filter(category =>
+      gamesList.filter.byCategories.includes(category.id)
+    ),
+    allCategories: categories,
+  }));
 
   return (
     <div className="games-selection__field">
       <InputLabel className="games-selection__title" id={labelId}>
-        Filter by Merchants
+        Filter by Categories
       </InputLabel>
       <Select
         multiple={true}
-        value={selectedMerchants.map(selected => selected.id)}
+        value={selectedCategories.map(selected => selected.id)}
         labelId={labelId}
         onChange={event => {
           dispatch(
-            setMerchantsFilter({ merchants: event.target.value as string[] })
+            setCategoriesFilter({ categories: event.target.value as string[] })
           );
         }}
         renderValue={selected => (
           <div className="games-selection__select-selected">
             {(selected as string[]).map((_, i) => (
               <span
-                key={selectedMerchants[i].id}
+                key={selectedCategories[i].id}
                 className="games-selection__select-selected-item"
               >
-                {selectedMerchants[i].name}
+                {selectedCategories[i].name}
               </span>
             ))}
           </div>
         )}
       >
-        {allMerchants.map(merchant => (
-          <MenuItem key={merchant.id} value={merchant.id}>
-            {merchant.name}
+        {allCategories.map(category => (
+          <MenuItem key={category.id} value={category.id}>
+            {category.name}
           </MenuItem>
         ))}
       </Select>

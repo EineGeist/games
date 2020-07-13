@@ -3,7 +3,7 @@ import { FetchAction, FetchSuccessAction, API_TYPES } from 'api/types';
 import {
   FAVORITE_GAMES_TYPES,
   SetFavoriteGamesAction,
-} from 'favoriteGames/types';
+} from 'data/favoriteGames/types';
 import {
   GamesListState,
   SORT_OPTIONS,
@@ -11,7 +11,7 @@ import {
   GAMES_LIST_TYPES,
 } from './types';
 import ProcessGamesList from './processList';
-import { GAMES_TYPES, SetPriorityAction } from 'games/types';
+import { GAMES_TYPES, SetPriorityAction } from 'data/games/types';
 import { LoadStorageAction, LOCAL_STORAGE_TYPES } from 'localStorage/types';
 
 export const initialState: GamesListState = {

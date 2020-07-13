@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import { API_TYPES, FetchAction, FetchSuccessAction } from 'api/types';
 import { GamesState, GAMES_TYPES, AllGamesActions } from './types';
-import { SetFavoriteGamesAction } from 'favoriteGames/types';
+import { SetFavoriteGamesAction } from 'data/favoriteGames/types';
 
 const initialState: GamesState = {
   games: [],

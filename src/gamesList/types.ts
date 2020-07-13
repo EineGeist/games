@@ -1,7 +1,7 @@
 import { ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { AppState } from 'store/types';
-import { ChunkedGamesArray } from 'games/types';
+import { ChunkedGamesArray } from 'data/games/types';
 
 export const gamesPerPageOptions = [10, 20, 40];
 

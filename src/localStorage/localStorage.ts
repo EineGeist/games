@@ -1,4 +1,4 @@
-import { FavoritesGamesState } from 'favoriteGames/types';
+import { FavoritesGamesState } from 'data/favoriteGames/types';
 import { throttle } from 'lodash';
 import store from 'store/store';
 import { loadStorage } from './actions';

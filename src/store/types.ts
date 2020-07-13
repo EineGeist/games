@@ -1,12 +1,12 @@
 import { AllApiTypes } from 'api/types';
-import { GamesState, AllGamesActions } from 'games/types';
+import { GamesState, AllGamesActions } from 'data/games/types';
+import { CategoriesState } from 'data/categories/types';
+import { MerchantsState } from 'data/merchants/types';
 import { AllGamesListActions, GamesListState } from 'gamesList/types';
-import { CategoriesState } from 'categories/types';
-import { MerchantsState } from 'merchants/types';
 import {
   FavoritesGamesState,
   AllFavoriteGamesActions,
-} from 'favoriteGames/types';
+} from 'data/favoriteGames/types';
 import { AllLocalStorageActions } from 'localStorage/types';
 
 export interface AppState {

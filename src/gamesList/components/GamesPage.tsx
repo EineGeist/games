@@ -2,15 +2,14 @@ import React, { FC, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from 'store/types';
-import { GamesState } from 'games/types';
-import { FavoriteGamesList } from 'favoriteGames/types';
-import { toggleFavoriteGame } from 'favoriteGames/actions';
+import { FavoriteGamesList } from 'data/favoriteGames/types';
+import { toggleFavoriteGame } from 'data/favoriteGames/actions';
+import { togglePriority } from 'data/games/actions';
+import { GamesListState } from 'gamesList/types';
 import './GamesPage.scss';
 import GamesHeader from './GamesHeader';
 import GamesList from './GamesList/GamesList';
 import GamesFooter from './GamesFooter';
-import { togglePriority } from 'games/actions';
-import { GamesListState } from 'gamesList/types';
 
 const GamesPage: FC = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,9 @@
 import { ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { AppState } from 'store/types';
-import { GameData } from 'games/types';
-import { CategoryData } from 'categories/types';
-import { MerchantData } from 'merchants/types';
-import { FavoriteGamesList } from 'favoriteGames/types';
+import { GameData } from 'data/games/types';
+import { CategoryData } from 'data/categories/types';
+import { MerchantData } from 'data/merchants/types';
 
 export interface FetchedData {
   games: GameData[];

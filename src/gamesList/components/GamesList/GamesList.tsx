@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { GamesArray } from 'games/types';
+import { GamesArray } from 'data/games/types';
+import { FavoriteGamesList } from 'data/favoriteGames/types';
 import './GamesList.scss';
 import GameCard from './GameCard';
-import { FavoriteGamesList } from 'favoriteGames/types';
 
 export interface GamesListProps {
   games: GamesArray;
