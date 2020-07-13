@@ -48,7 +48,7 @@ const GamesPage: FC = () => {
 
   if (shouldRedirect) return <Redirect to="/games/1" />;
 
-  return isFetching ? null : (
+  return (
     <div className="games-page">
       <GamesHeader page={page} numberOfPages={gamesList.length || 0} />
       <GamesList
