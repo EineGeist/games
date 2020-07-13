@@ -1,8 +1,8 @@
-import { FetchDataThunk, FETCH_TYPES } from './types';
+import { FetchDataThunk, API_TYPES } from './types';
 import api from './api';
 
 export const fetchData: FetchDataThunk = () => async dispatch => {
-  const type = FETCH_TYPES['FETCH_DATA'];
+  const type = API_TYPES['FETCH_DATA'];
 
   dispatch({
     type,

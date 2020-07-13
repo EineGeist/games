@@ -14,32 +14,34 @@ export interface FetchedData {
   };
 }
 
-export enum FETCH_TYPES {
+export enum API_TYPES {
   FETCH_DATA = 'FETCH_DATA',
 }
 
-interface FetchAction<S extends string> {
-  type: typeof FETCH_TYPES['FETCH_DATA'];
+interface FetchActionFactory<S extends string> {
+  type: typeof API_TYPES['FETCH_DATA'];
   meta: {
     status: S;
   };
 }
 
-export interface FetchPendingAction extends FetchAction<'pending'> {}
+export interface FetchPendingAction extends FetchActionFactory<'pending'> {}
 
-export interface FetchSuccessAction extends FetchAction<'success'> {
+export interface FetchSuccessAction extends FetchActionFactory<'success'> {
   payload: FetchedData;
 }
 
-export interface FetchErrorAction extends FetchAction<'error'> {
+export interface FetchErrorAction extends FetchActionFactory<'error'> {
   error: string;
 }
 
-export type AllFetchActions =
+export type FetchAction =
   | FetchPendingAction
   | FetchSuccessAction
   | FetchErrorAction;
 
+export type AllApiTypes = FetchAction;
+
 export type FetchDataThunk = ActionCreator<
-  ThunkAction<void, AppState, void, AllFetchActions>
+  ThunkAction<void, AppState, void, FetchAction>
 >;

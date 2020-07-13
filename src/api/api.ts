@@ -1,13 +1,16 @@
 import { FetchedData } from './types';
-import { GameData } from 'games/types';
-import { CategoryData } from 'categories/types';
 
-export default new (class {
-  private readonly instance: this | null = null;
+class Api {
+  private static instance: Api;
 
-  constructor() {
-    if (this.instance) return this.instance;
-    this.instance = this;
+  private constructor() {}
+
+  public static getInstance(): Api {
+    if (!Api.instance) {
+      Api.instance = new Api();
+    }
+
+    return Api.instance;
   }
 
   readonly API_PATH = 'https://www.rost.bet/api/v1/games';
@@ -62,4 +65,6 @@ export default new (class {
       merchants: processedMerchants,
     };
   }
-})();
+}
+
+export default Api.getInstance();

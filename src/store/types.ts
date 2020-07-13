@@ -1,4 +1,4 @@
-import { AllFetchActions } from 'api/types';
+import { AllApiTypes } from 'api/types';
 import { GamesState, AllGamesActions } from 'games/types';
 import { AllGamesListActions, GamesListState } from 'gamesList/types';
 import { CategoriesState } from 'categories/types';
@@ -18,7 +18,7 @@ export interface AppState {
 }
 
 export type AllActions =
-  | AllFetchActions
+  | AllApiTypes
   | AllGamesActions
   | AllGamesListActions
   | AllFavoriteGamesActions

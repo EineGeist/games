@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { AllFetchActions, FetchSuccessAction, FETCH_TYPES } from 'api/types';
+import { FetchAction, FetchSuccessAction, API_TYPES } from 'api/types';
 import {
   FAVORITE_GAMES_TYPES,
   SetFavoriteGamesAction,
@@ -41,14 +41,14 @@ const process = new ProcessGamesList(initialState);
 
 const gamesListReducer: Reducer<
   GamesListState,
-  | AllFetchActions
+  | FetchAction
   | AllGamesListActions
   | SetFavoriteGamesAction
   | SetPriorityAction
   | LoadStorageAction
 > = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_TYPES['FETCH_DATA']: {
+    case API_TYPES['FETCH_DATA']: {
       if (action.meta.status !== 'success') return state;
 
       const {
